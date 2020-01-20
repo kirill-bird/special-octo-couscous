@@ -1,0 +1,35 @@
+from array import *
+nowPos = 0
+codeString = ""
+scriptFile = open("scriptFile.txt", "r")
+Script = scriptFile.readline()
+#print(Script)
+codeFile = open("codeFile.txt", "r")
+String = codeFile.readline()
+
+
+print("Введите кодовое слово")
+password = input()
+intPassword = array("i")
+while nowPos < len(password):
+    intPassword.insert(nowPos, Script.find(password[nowPos]))
+    nowPos += 1
+longPassword = len(intPassword)
+
+
+nowPos = 0
+while nowPos < len(String):
+        #timeLetter = String[nowPos]
+        #timeScript = Script.find(timeLetter)
+        #timeLetter = Script[(timeScript+1) % 31]
+        #newString += timeLetter
+    codeString += Script[(Script.find(String[nowPos])+(intPassword[nowPos % longPassword])) % len(Script)]
+    nowPos += 1
+print(codeString)
+
+decodeString = ""
+nowPos = 0
+while nowPos < len(codeString):
+    decodeString += Script[(Script.find(codeString[nowPos])+(len(Script)-(intPassword[nowPos % longPassword]))) % len(Script)]
+    nowPos += 1
+print(decodeString)
